@@ -13,6 +13,5 @@ public class Main {
         System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
         System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
         System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
-
     }
 }
