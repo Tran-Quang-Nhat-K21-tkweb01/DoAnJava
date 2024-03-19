@@ -5,5 +5,14 @@ import java.sql.SQLOutput;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+        System.out.println("Trần Quang Nhật Đẹp Trai Chung Tình Số 1 Việt Nam");
+
     }
 }
