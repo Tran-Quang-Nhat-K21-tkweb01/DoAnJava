@@ -1,0 +1,18 @@
+Tên sản phẩm: Rau muống xào tỏi
+Giá bán: 50000.0
+Tồn kho: 100
+Tên sản phẩm: Sụn gà chiên mắm
+Giá bán: 60000.0
+Tồn kho: 100
+Tên sản phẩm: Trứng bách thảo
+Giá bán: 90000.0
+Tồn kho: 100
+Tên sản phẩm: Cocacola
+Giá bán: 15000.0
+Tồn kho: 100
+Tên sản phẩm: Tiger beer
+Giá bán: 20000.0
+Tồn kho: 100
+Tên sản phẩm: Huda beer
+Giá bán: 25000.0
+Tồn kho: 100
