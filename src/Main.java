@@ -55,6 +55,22 @@ public class Main {
                     break;
                 }
                 case 7: {
+                    System.out.println("1. Xuất hóa đơn ra file");
+                    System.out.println("2. Xuât danh sách menu ra file");
+                    System.out.println("0. Thoát");
+                    System.out.println("---------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon7 = KiemTraDauVao(0, 2);
+                    if(chon7 == 0) break;
+                    switch (chon7) {
+                        case 1: {
+                            break;
+                        }
+                        case 2:{
+                            XuatRaFile("thongtin.txt");
+                            break;
+                        }
+                    }
                     break;
                 }
             }
@@ -75,9 +91,9 @@ public class Main {
         System.out.println("====================================");
         System.out.println("||  5. THANH TOÁN                 ||");
         System.out.println("====================================");
-        System.out.println("||  6. NHẬP THÔNG TIN             ||");
+        System.out.println("||  6. NHẬP TỪ FILE               ||");
         System.out.println("====================================");
-        System.out.println("||  7. XUẤT THÔNG TIN             ||");
+        System.out.println("||  7. XUẤT RA FILE               ||");
         System.out.println("====================================");
         System.out.println("||  8. THỐNG KÊ                   ||");
         System.out.println("====================================");
@@ -141,19 +157,20 @@ public class Main {
     }
 
     //Hàm xuất dữ liệu ra file
-    public static void WriteFile(SanPham[] sanPhams) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("thongtin.txt"))) {
-            // Ghi thông tin sản phẩm vào file
-            for (SanPham sp : sanPhams) {
-                writer.write("Tên sản phẩm: " + sp.tenSanPham + "\n");
-                writer.write("Giá bán: " + sp.giaBan + "\n");
-                writer.write("Tồn kho: " + sp.tonKho + "\n");
+    public static void XuatRaFile(String file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < soLuongSanPham; i++) {
+                SanPham sp = sanPhams[i];
+                String line = sp.tenSanPham + "|" + sp.giaBan + "|" + sp.tonKho;
+                writer.write(line);
+                writer.newLine(); // Xuống dòng sau mỗi sản phẩm
             }
-            System.out.println("Dữ liệu đã được ghi vào file 'thongtin.txt'");
+            System.out.println("Dữ liệu đã được ghi vào file '" + file + "'");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     // Hàm đọc dữ liệu từ file
 
