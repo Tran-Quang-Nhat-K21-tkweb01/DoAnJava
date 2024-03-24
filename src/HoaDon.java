@@ -4,15 +4,16 @@ public class HoaDon {
     public String soBan;
     public String gioVao;
     public String gioRa = "";
-    public int[] soLuong = new int[5];
-    public double thanhTien;
+
+    Main SL = new Main();
+    int sLMenu = Main.soLuongSanPham;
+    public int[] soLuong = new int[sLMenu];
     public double tongTien;
 
-    public HoaDon(String soBan, String gioVao, int[] soLuong, double thanhTien, double tongTien) {
+    public HoaDon(String soBan, String gioVao, int[] soLuong, double tongTien) {
         this.soBan = soBan;
         this.gioVao = gioVao;
         this.soLuong = soLuong;
-        this.thanhTien = thanhTien;
         this.tongTien = tongTien;
     }
 }

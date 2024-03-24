@@ -1,5 +1,5 @@
                           diềm hèo nướng|                50000|          200
                            chân gà nướng|                 5000|          200
-                             nước ép cam|                30000|          201
-                       xúc xích nướng đá|                20000|          123
-                           không cảm xúc|                50000|           25
+                             nước ép cam|                30000|          200
+                       xúc xích nướng đá|                20000|          100
+                           không cảm xúc|                50000|          100
