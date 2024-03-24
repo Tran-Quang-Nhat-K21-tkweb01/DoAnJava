@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,7 +12,7 @@ public class Main {
     static SanPham[] sanPhams = new SanPham[500];
     static HoaDon[] hoaDons = new HoaDon[200];
     static int soLuongSanPham = 0;
-    static int soLuongBan = 0;
+    static int soLuongHoaDon = 0;
     static double taiKhoanThanhToan = 50000000;
     public static void main(String[] args) {
 
@@ -24,6 +25,31 @@ public class Main {
                     break;
                 }
                 case 2: {
+                    System.out.println("1. Oder Thêm");
+                    System.out.println("2. Nhập Bàn Mới");
+                    System.out.println("0. Thoát");
+                    System.out.println("---------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon2 = KiemTraDauVao(0, 2);
+                    if (chon2 == 0) break;
+                    switch (chon2) {
+                        case 1:{
+
+                            break;
+                        }
+                        case 2:{
+                            if(soLuongSanPham <= 0) {
+                                System.out.println("Dữ liệu MENU trống");
+                                break;
+                            } else {
+                                InThongTinSanPham(soLuongSanPham);
+                                NhapBanMoi();
+                            }
+
+                            break;
+                        }
+                    }
+
                     break;
                 }
                 case 3: {
@@ -49,6 +75,10 @@ public class Main {
                             int soSPThem= KiemTraDauVao(0, 1000);
                             soLuongSanPham = NhapThongTinSanPham(soSPThem);
                             InThongTinSanPham(soLuongSanPham);
+                            break;
+                        }
+                        case 2:{
+                            NhapTuFile("thongtin.txt");
                             break;
                         }
                     }
@@ -126,21 +156,9 @@ public class Main {
         }
     }
 
-
-    public static int NhapThongTinSanPham(int soLuongSP) {
-        Scanner sc = new Scanner(System.in);
-        for (int i = soLuongSanPham; i < soLuongSanPham + soLuongSP; i++) {
-            System.out.print("Nhập tên mặt hàng thứ " + (i+1) + " : " + "\n");
-            String tenSanPham = sc.nextLine();
-            System.out.print("Nhập giá bán : " + "\n");
-            int giaBan = KiemTraDauVao(0, 1000000);
-            System.out.print("Nhập số lượng : " + "\n");
-            int soLuong = KiemTraDauVao(0, 10000);
-            sanPhams[i] = new SanPham(tenSanPham,giaBan,soLuong);
-        }
-        soLuongSanPham += soLuongSP;
-        return soLuongSanPham;
-    }
+//1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+//1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+    //Hàm in danh sách menu ra màn hình
     public static void InThongTinSanPham(int soSPThem){
         if(soSPThem > 0) {
             System.out.println("-------------------------------------------------------------------------------------------------");
@@ -156,12 +174,49 @@ public class Main {
         }
     }
 
+//2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+//2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+    public static void NhapBanMoi() {
+        Scanner sc = new Scanner(System.in);
+        Calendar cal = Calendar.getInstance();
+        System.out.print("Nhập số bàn : ");
+        String soBan = sc.next();
+
+
+    }
+//3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+//3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+//5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+//5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+//6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+//6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+    //Hàm nhập thêm món vào menu
+    public static int NhapThongTinSanPham(int soLuongSP) {
+        Scanner sc = new Scanner(System.in);
+        for (int i = soLuongSanPham; i < soLuongSanPham + soLuongSP; i++) {
+            System.out.print("Nhập tên mặt hàng thứ " + (i+1) + " : " + "\n");
+            String tenSanPham = sc.nextLine();
+            System.out.print("Nhập giá bán : " + "\n");
+            int giaBan = KiemTraDauVao(0, 1000000);
+            System.out.print("Nhập số lượng : " + "\n");
+            int soLuong = KiemTraDauVao(0, 10000);
+            sanPhams[i] = new SanPham(tenSanPham,giaBan,soLuong);
+        }
+        soLuongSanPham += soLuongSP;
+        return soLuongSanPham;
+    }
+
+
+
     //Hàm xuất dữ liệu ra file
     public static void XuatRaFile(String file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < soLuongSanPham; i++) {
                 SanPham sp = sanPhams[i];
-                String line = sp.tenSanPham + "|" + sp.giaBan + "|" + sp.tonKho;
+                String line = String.format("%40s|%21d|%13d", sp.tenSanPham, sp.giaBan, sp.tonKho);
                 writer.write(line);
                 writer.newLine(); // Xuống dòng sau mỗi sản phẩm
             }
@@ -171,7 +226,36 @@ public class Main {
         }
     }
 
-
+//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     // Hàm đọc dữ liệu từ file
-
+    public static void NhapTuFile(String file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            int index = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|"); // Tách thông tin của mỗi sản phẩm
+                if (parts.length == 3) {
+                    String tenSanPham = parts[0].trim();
+                    int giaBan = Integer.parseInt(parts[1].trim());
+                    int tonKho = Integer.parseInt(parts[2].trim());
+                    sanPhams[index++] = new SanPham(tenSanPham, giaBan, tonKho);
+                }
+            }
+            soLuongSanPham = index;
+            System.out.println("Dữ liệu đã được nhập từ file '" + file + "'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi định dạng số khi nhập từ file.");
+            e.printStackTrace();
+        }
+    }
 }
+
+//8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+//8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+//9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+//9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+//1010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
+//1010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
