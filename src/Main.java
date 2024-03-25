@@ -23,8 +23,32 @@ public class Main {
             if (chon1 == 0) break;
             switch(chon1) {
                 case 1: {
-                    inThongTinSanPham(soLuongSanPham);
-                    anPhimBatKy();
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Danh sách Menu");
+                    System.out.println("2. Các bàn đang hoạt động");
+                    System.out.println("0. Thoát");
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon1B = kiemTraDauVao(0, 2);
+                    if (chon1B == 0) break;
+                    switch (chon1B) {
+                        case 1: {
+                            inThongTinSanPham(soLuongSanPham);
+                            anPhimBatKy();
+                            break;
+                        }
+                        case 2: {
+                            if(soLuongHoaDon <= 0) {
+                                System.out.println("Chưa có bàn hoạt động");
+                                break;
+                            }else {
+                                inHoaDonHienCo(0, soLuongHoaDon);
+                            }
+
+                            anPhimBatKy();
+                            break;
+                        }
+                    }
                     break;
                 }
                 case 2: {
@@ -33,7 +57,8 @@ public class Main {
                         System.out.println("1. Oder Thêm");
                         System.out.println("2. Nhập Bàn Mới");
                         System.out.println("0. Thoát");
-                        System.out.println("-------------------------------------");                        System.out.print("MỜI BẠN CHỌN : ");
+                        System.out.println("-------------------------------------");
+                        System.out.print("MỜI BẠN CHỌN : ");
                         int chon2 = kiemTraDauVao(0, 2);
                         if (chon2 == 0) break;
                         switch (chon2) {
@@ -68,11 +93,14 @@ public class Main {
                     break;
                 }
                 case 6: {
-                    System.out.println("-------------------------------------");                    System.out.println("1. Nhập thêm món vào menu");
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Nhập thêm món vào menu");
                     System.out.println("2. Nhập menu từ file có sẵn");
+                    System.out.println("3. Nhập danh sách hóa đơn từ file có sẵn");
                     System.out.println("0. Thoát");
-                    System.out.println("-------------------------------------");                    System.out.print("MỜI BẠN CHỌN : ");
-                    int chon6 = kiemTraDauVao(0, 2);
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon6 = kiemTraDauVao(0, 3);
                     if (chon6 == 0) break;
                     switch (chon6) {
                         case 1:{
@@ -89,18 +117,35 @@ public class Main {
                             anPhimBatKy();
                             break;
                         }
+                        case 3:{
+                            if (soLuongSanPham <= 0){
+                                System.out.println("Không thể thực hiện, vui lòng nhập dữ liệu cho danh sách Menu");
+                            }else {
+                                docHoaDonTuFile("Hoadon.txt");
+                            }
+                            break;
+                        }
                     }
                     break;
                 }
                 case 7: {
-                    System.out.println("-------------------------------------");                    System.out.println("1. Xuất hóa đơn ra file");
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Xuất hóa đơn ra file");
                     System.out.println("2. Xuât danh sách menu ra file");
                     System.out.println("0. Thoát");
-                    System.out.println("-------------------------------------");                    System.out.print("MỜI BẠN CHỌN : ");
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
                     int chon7 = kiemTraDauVao(0, 2);
                     if(chon7 == 0) break;
                     switch (chon7) {
                         case 1: {
+                            if(soLuongHoaDon <= 0) {
+                                System.out.println("Chưa có bàn hoạt động");
+                                break;
+                            }else {
+                                xuatHoaDonRaFile("Hoadon.txt");
+                            }
+                            anPhimBatKy();
                             break;
                         }
                         case 2:{
@@ -184,6 +229,34 @@ public class Main {
         return soLuongSanPham;
     }
 
+    //Hàm in tất cả hóa đơn hiện có
+    public static void inHoaDonHienCo(int a, int b) {
+        int i = a;
+        do {
+            System.out.println("                        PXU PUB BEER GARDEN                 ");
+            System.out.println("              176 Trần Phú, P Vĩnh Ninh, Thành phố Huế      ");
+            System.out.println("                          Tel : 0766663708                  ");
+            System.out.println("                        ___________________                 ");
+            System.out.println("                          HÓA ĐƠN BÁN HÀNG                  ");
+            System.out.println("         Bàn số : " + hoaDons[i].soBan);
+            System.out.println("                                       giờ vào : " + hoaDons[i].gioVao);
+            System.out.println("                                       giờ ra  : ");
+            System.out.println("____________________________________________________________________");
+            System.out.printf("%-25s%10s%9s%14s \n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
+            System.out.println("____________________________________________________________________");
+            for (int j = 0; j < soLuongSanPham; j++) {
+                if(hoaDons[i].soLuong[j] > 0) {
+                    long thanhTien = (hoaDons[i].soLuong[j] * sanPhams[j].giaBan);
+                    System.out.printf("%-25s%10d%9d%14d \n",
+                            sanPhams[j].tenSanPham, hoaDons[i].soLuong[j], sanPhams[j].giaBan, thanhTien);
+                }
+            }
+            System.out.println("____________________________________________________________________");
+            System.out.println("Tổng cộng : " + hoaDons[i].tongTien);
+            i++;
+        } while (i < b);
+    }
+
 //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
     public static double nhapBanMoi() {
@@ -205,9 +278,9 @@ public class Main {
             int chonMon = kiemTraDauVao(0, soLuongSanPham);if(chonMon == 0) break;
             System.out.print("Nhập số lượng : ");
             int sL = kiemTraDauVao(1, sanPhams[chonMon - 1].tonKho);
-            soLuong[chonMon-1] = sL;
+            soLuong[chonMon-1] += sL;
         }
-        double tongTien = 0;
+        long tongTien = 0;
         for (int i = 0; i < soLuongSanPham; i++){
             if(soLuong[i] > 0){
                 tongTien += sanPhams[i].giaBan * soLuong[i];
@@ -253,27 +326,7 @@ public class Main {
         soLuongSanPham += soLuongSP;
         return soLuongSanPham;
     }
-
-
-
-    //Hàm xuất dữ liệu ra file
-    public static void xuatRaFile(String file) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (int i = 0; i < soLuongSanPham; i++) {
-                SanPham sp = sanPhams[i];
-                String line = String.format("%40s|%21d|%13d", sp.tenSanPham, sp.giaBan, sp.tonKho);
-                writer.write(line);
-                writer.newLine(); // Xuống dòng sau mỗi sản phẩm
-            }
-            System.out.println("Dữ liệu đã được ghi vào file '" + file + "'");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
-//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
-    // Hàm đọc dữ liệu từ file
+    // Hàm đọc dữ liệu menu từ file
     public static void nhapTuFile(String file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -296,6 +349,78 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    // Hàm đọc thông tin hóa đơn từ file
+    public static void docHoaDonTuFile(String file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            int index = 0;
+            while ((line = reader.readLine()) != null) {
+                String soBan = line.trim();
+                String gioVao = reader.readLine().trim();
+                String soLuongString = reader.readLine().trim();
+                String[] soLuongArr = soLuongString.split(" ");
+                int[] soLuong = new int[soLuongArr.length];
+                for (int i = 0; i < soLuongArr.length; i++) {
+                    soLuong[i] = Integer.parseInt(soLuongArr[i]);
+                }
+                long tongTien = Long.parseLong(reader.readLine().trim());
+                for(int i = 0; i < soLuongSanPham; i++) {
+                    if(hoaDons[index].soLuong[i] > 0) {
+                        sanPhams[i].tonKho -= hoaDons[soLuongHoaDon].soLuong[i];
+                    }
+                }
+                hoaDons[index++] = new HoaDon(soBan, gioVao, soLuong, tongTien);
+
+            }
+            soLuongHoaDon = index;
+            System.out.println("Dữ liệu hóa đơn đã được đọc từ file '" + file + "'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+//7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+
+    //Hàm xuất dữ liệu danh sách menu ra file
+    public static void xuatRaFile(String file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < soLuongSanPham; i++) {
+                SanPham sp = sanPhams[i];
+                String line = String.format("%40s|%21d|%13d", sp.tenSanPham, sp.giaBan, sp.tonKho);
+                writer.write(line);
+                writer.newLine(); // Xuống dòng sau mỗi sản phẩm
+            }
+            System.out.println("Dữ liệu đã được ghi vào file '" + file + "'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Hàm xuất thông tin hóa đơn ra file
+    public static void xuatHoaDonRaFile(String file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (int i = 0; i < soLuongHoaDon; i++) {
+                writer.write(hoaDons[i].soBan);
+                writer.newLine();
+                writer.write(hoaDons[i].gioVao);
+                writer.newLine();
+                for (int j = 0; j < hoaDons[i].soLuong.length; j++) {
+                    writer.write(hoaDons[i].soLuong[j] + " ");
+                }
+                writer.newLine();
+                writer.write(hoaDons[i].tongTien + "");
+                writer.newLine();
+                System.out.println("Thông tin hóa đơn bàn số " + hoaDons[i].soBan +" đã được xuất ra file '" + file + "'");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
 //8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888

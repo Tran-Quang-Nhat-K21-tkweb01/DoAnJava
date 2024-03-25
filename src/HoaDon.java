@@ -8,9 +8,9 @@ public class HoaDon {
     Main SL = new Main();
     int sLMenu = Main.soLuongSanPham;
     public int[] soLuong = new int[sLMenu];
-    public double tongTien;
+    public long tongTien;
 
-    public HoaDon(String soBan, String gioVao, int[] soLuong, double tongTien) {
+    public HoaDon(String soBan, String gioVao, int[] soLuong, long tongTien) {
         this.soBan = soBan;
         this.gioVao = gioVao;
         this.soLuong = soLuong;
