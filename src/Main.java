@@ -15,6 +15,9 @@ public class Main {
     static HoaDon[] hoaDons = new HoaDon[200];
     static int soLuongSanPham = 0;
     static int soLuongHoaDon = 0;
+
+    static HoaDon hoaDonDaThanhToan[] = new HoaDon[1000];
+    static int soLuongHoaDonDaThanhToan = 0;
     static double taiKhoanThanhToan = 50000000;
     public static void main(String[] args) {
 
@@ -73,6 +76,10 @@ public class Main {
                                 } else {
                                     int sw22 = inThongTinSanPham(soLuongSanPham); if(sw22 <= 0) break;
                                     nhapBanMoi();
+
+                                    int in2 = soLuongHoaDon - 1;
+                                    inHoaDonHienCo(in2, in2);
+                                    System.out.println("Tạo bàn mới thành công");
                                 }
 
                                 anPhimBatKy();
@@ -85,7 +92,7 @@ public class Main {
                 }
                 case 3: {
                     System.out.println("-------------------------------------");
-                    System.out.println("1. Tìm hóa đơn theo số bàn");
+                    System.out.println("1. Tìm kiếm hóa đơn theo số bàn");
                     System.out.println("2. Tìm kiếm hóa đơn theo tên món");
                     System.out.println("0. Thoát");
                     System.out.println("-------------------------------------");
@@ -95,7 +102,7 @@ public class Main {
                     switch (chon3){
                         case 1: {
                             int ketQua = timKiemTheoSoBan();
-                            if(ketQua <= 0) {
+                            if(ketQua < 0) {
                                 System.out.println("Không tìm thấy hóa đơn liên quan");
                                 break;
                             } else {
@@ -105,7 +112,12 @@ public class Main {
                             break;
                         }
                         case 2: {
-
+                            int kQ = timKiemTheoTenMon();
+                            if(kQ <= 0) {
+                                System.out.println("Không có kết quả trùng khớp");
+                            } else {
+                                System.out.println("Có " + kQ + "tìm kiếm trùng khớp ");
+                            }
                             break;
                         }
                     }
@@ -115,34 +127,38 @@ public class Main {
                     break;
                 }
                 case 5: {
+                    if(soLuongHoaDon < 0){
+                        System.out.println("Chưa có bàn hoạt động");
+                        break;
+                    }
+                    inHoaDonHienCo(0, soLuongHoaDon);
+                    int n = timKiemTheoSoBan();
+                    if(n < 0) {
+                        System.out.println("Không tìm thấy bàn này");
+                    }else {
+                        thanhToanHoaDon(n);
+                    }
+
                     break;
                 }
                 case 6: {
                     System.out.println("-------------------------------------");
-                    System.out.println("1. Nhập thêm món vào menu");
-                    System.out.println("2. Nhập menu từ file có sẵn");
-                    System.out.println("3. Nhập danh sách hóa đơn từ file có sẵn");
+                    System.out.println("1. Nhập menu từ file có sẵn");
+                    System.out.println("2. Nhập danh sách hóa đơn từ file có sẵn");
                     System.out.println("0. Thoát");
                     System.out.println("-------------------------------------");
                     System.out.print("MỜI BẠN CHỌN : ");
-                    int chon6 = kiemTraDauVao(0, 3);
+                    int chon6 = kiemTraDauVao(0, 2);
                     if (chon6 == 0) break;
                     switch (chon6) {
                         case 1:{
-                            System.out.println("NHẬP SỐ LƯỢNG MẶT HÀNG CẦN THÊM VÀO MENU : ");
-                            int soSPThem= kiemTraDauVao(0, 1000);
-                            soLuongSanPham = nhapThongTinSanPham(soSPThem);
-                            inThongTinSanPham(soLuongSanPham);
-                            break;
-                        }
-                        case 2:{
                             nhapTuFile("thongtin.txt");
                             inThongTinSanPham(soLuongSanPham);
 
                             anPhimBatKy();
                             break;
                         }
-                        case 3:{
+                        case 2:{
                             if (soLuongSanPham <= 0){
                                 System.out.println("Không thể thực hiện, vui lòng nhập dữ liệu cho danh sách Menu");
                             }else {
@@ -180,6 +196,25 @@ public class Main {
                         }
                     }
                     break;
+                }
+                case 10: {
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Nhập thêm món vào menu");
+                    System.out.println("2. Nhập thêm số lượng vào kho hàng");
+                    System.out.println("0. Thoát");
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon10 = kiemTraDauVao(0, 2);
+                    if(chon10 == 0) break;
+                    switch (chon10) {
+                        case 1:{
+                            System.out.println("NHẬP SỐ LƯỢNG MẶT HÀNG CẦN THÊM VÀO MENU : ");
+                            int soSPThem= kiemTraDauVao(0, 1000);
+                            soLuongSanPham = nhapThongTinSanPham(soSPThem);
+                            inThongTinSanPham(soLuongSanPham);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -258,17 +293,11 @@ public class Main {
     public static void inHoaDonHienCo(int a, int b) {
         int i = a;
         do {
-            System.out.println("                        PXU PUB BEER GARDEN                 ");
-            System.out.println("              176 Trần Phú, P Vĩnh Ninh, Thành phố Huế      ");
-            System.out.println("                          Tel : 0766663708                  ");
-            System.out.println("                        ___________________                 ");
-            System.out.println("                          HÓA ĐƠN BÁN HÀNG                  ");
+            System.out.println("____________________________________________________________________");
             System.out.println("         Bàn số : " + hoaDons[i].soBan);
             System.out.println("                                       giờ vào : " + hoaDons[i].gioVao);
             System.out.println("                                       giờ ra  : ");
-            System.out.println("____________________________________________________________________");
             System.out.printf("%-25s%10s%9s%14s \n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
-            System.out.println("____________________________________________________________________");
             for (int j = 0; j < soLuongSanPham; j++) {
                 if(hoaDons[i].soLuong[j] > 0) {
                     long thanhTien = (hoaDons[i].soLuong[j] * sanPhams[j].giaBan);
@@ -276,8 +305,8 @@ public class Main {
                             sanPhams[j].tenSanPham, hoaDons[i].soLuong[j], sanPhams[j].giaBan, thanhTien);
                 }
             }
-            System.out.println("____________________________________________________________________");
             System.out.println("Tổng cộng : " + hoaDons[i].tongTien);
+            System.out.println("____________________________________________________________________");
             i++;
         } while (i < b);
     }
@@ -336,11 +365,32 @@ public class Main {
         System.out.print("Nhập vào số bàn muốn tìm kiếm : ");
         String timKiem = scanner.next();
         for (int i = 0; i < soLuongHoaDon; i++) {
-            if (timKiem.equals(hoaDons[i].soBan) == true) {
+            if (timKiem.equals(hoaDons[i].soBan)) {
                 return i;
             }
         }
         return -1;
+    }
+
+    // Hàm tìm kiếm theo tên món
+    public static int timKiemTheoTenMon(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhập vào tên mặt hàng bạn muốn tìm kiếm");
+
+        int kQ = 0;
+        String tenMon = sc.next();
+
+        for (int i = 0; i < soLuongHoaDon; i++) {
+            for (int j = 0; j < soLuongSanPham; j++) {
+                if(hoaDons[i].soLuong[j] > 0 && sanPhams[j].tenSanPham.indexOf(tenMon) >= 0) {
+                    inHoaDonHienCo(i, i);
+                    kQ++;
+                    break;
+                }
+            }
+        }
+
+        return kQ;
     }
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
@@ -348,7 +398,42 @@ public class Main {
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 
     //Hàm Xuất hóa đơn thanh toán
+    public static void thanhToanHoaDon(int x) {
+        LocalDateTime gioHienTai = LocalDateTime.now();
+        // Định dạng ngày và giờ theo ý muốn
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy  HH:mm");
+        // Chuyển đổi ngày và giờ thành chuỗi theo định dạng đã chỉ định
+        String gioRa = gioHienTai.format(formatter);
+        System.out.println("+____________________________________________________________+");
+        System.out.println("|                        PXU PUB BEER GARDEN                 |");
+        System.out.println("|              176 Trần Phú, P Vĩnh Ninh, Thành phố Huế      |");
+        System.out.println("|                          Tel : 0766663708                  |");
+        System.out.println("|                        ___________________                 |");
+        System.out.println("|                          HÓA ĐƠN BÁN HÀNG                  |");
+        System.out.println("|         Bàn số : " + hoaDons[x].soBan + "|");
+        System.out.println("|                                 giờ vào : " + hoaDons[x].gioVao + "|");
+        System.out.println("|                                 giờ ra  : " + gioRa + "|");
+        System.out.println("|____________________________________________________________|");
+        System.out.printf("|%-25s%10s%9s%14s |\n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
+        System.out.println("|____________________________________________________________|");
+        for (int j = 0; j < soLuongSanPham; j++) {
+            if(hoaDons[x].soLuong[j] > 0) {
+                long thanhTien = (hoaDons[x].soLuong[j] * sanPhams[j].giaBan);
+                System.out.printf("%-25s%10d%9d%14d \n",
+                        sanPhams[j].tenSanPham, hoaDons[x].soLuong[j], sanPhams[j].giaBan, thanhTien);
+            }
+        }
+        System.out.println("+____________________________________________________________+");
+        System.out.println("                                   Tổng cộng : " + hoaDons[x].tongTien);
+        hoaDonDaThanhToan[soLuongHoaDonDaThanhToan] = hoaDons[x];
+        hoaDonDaThanhToan[soLuongHoaDonDaThanhToan].gioRa = gioRa;
+        for (int i = x; i < soLuongHoaDon; i++) {
+            hoaDons[i] = hoaDons[i+1];
+        }
 
+        soLuongHoaDonDaThanhToan += 1;
+        soLuongHoaDon -= 1;
+    }
 //6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
 //6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
 
