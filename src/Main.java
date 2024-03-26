@@ -84,6 +84,31 @@ public class Main {
                     break;
                 }
                 case 3: {
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Tìm hóa đơn theo số bàn");
+                    System.out.println("2. Tìm kiếm hóa đơn theo tên món");
+                    System.out.println("0. Thoát");
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon3 = kiemTraDauVao(0, 2);
+                    if (chon3 == 0) break;
+                    switch (chon3){
+                        case 1: {
+                            int ketQua = timKiemTheoSoBan();
+                            if(ketQua <= 0) {
+                                System.out.println("Không tìm thấy hóa đơn liên quan");
+                                break;
+                            } else {
+                                inHoaDonHienCo(ketQua, ketQua);
+                            }
+
+                            break;
+                        }
+                        case 2: {
+
+                            break;
+                        }
+                    }
                     break;
                 }
                 case 4: {
@@ -304,10 +329,26 @@ public class Main {
     }
 //3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 //3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+
+    // Hàm tìm kiếm theo số bàn
+    public static int timKiemTheoSoBan() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhập vào số bàn muốn tìm kiếm : ");
+        String timKiem = scanner.next();
+        for (int i = 0; i < soLuongHoaDon; i++) {
+            if (timKiem.equals(hoaDons[i].soBan) == true) {
+                return i;
+            }
+        }
+        return -1;
+    }
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+
+    //Hàm Xuất hóa đơn thanh toán
+
 //6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
 //6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
 
@@ -363,13 +404,11 @@ public class Main {
                 int[] soLuong = new int[soLuongArr.length];
                 for (int i = 0; i < soLuongArr.length; i++) {
                     soLuong[i] = Integer.parseInt(soLuongArr[i]);
-                }
-                long tongTien = Long.parseLong(reader.readLine().trim());
-                for(int i = 0; i < soLuongSanPham; i++) {
-                    if(hoaDons[index].soLuong[i] > 0) {
-                        sanPhams[i].tonKho -= hoaDons[soLuongHoaDon].soLuong[i];
+                    if(soLuong[i] > 0) {
+                        sanPhams[i].tonKho -= soLuong[i];
                     }
                 }
+                long tongTien = Long.parseLong(reader.readLine().trim());
                 hoaDons[index++] = new HoaDon(soBan, gioVao, soLuong, tongTien);
 
             }
