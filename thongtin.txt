@@ -1,5 +1,17 @@
-                          diềm hèo nướng|                50000|          200
-                           chân gà nướng|                 5000|          200
-                             nước ép cam|                30000|          200
-                       xúc xích nướng đá|                20000|          100
-                           không cảm xúc|                50000|          100
+                          SÚP GÀ THẢ NẤM|               200000|          150
+                     NỘM THẬP CẨM XÁ XÍU|               200000|          150
+                      GÀ HẤP NẤM ĐÔNG CÔ|               200000|          150
+                          NEM NHẤT THỐNG|               180000|          150
+                         BÒ SỐT TIÊU ĐEN|               180000|          200
+                    TÔM SÚ CHIÊN TEMPURA|               180000|          200
+                            CÁ TẰM NƯỚNG|               160000|          200
+                 HOA LƠ THẬP CẨM XÀO NẤM|               160000|          200
+                        SỤN GÀ RANG MUỐI|               160000|          250
+                           XÔI HOÀNG PHỐ|               140000|          250
+                  CANH CHUA CÁ KIỂU THÁI|               140000|          250
+                                 CƠM TẤM|               140000|          250
+                          DIỀM HEO NƯỚNG|               120000|          300
+                                HUDA LON|                25000|          960
+                              TIGER XANH|                30000|          960
+                            HEINEKEN BẠC|                35000|          960
+                          STRONGBOW CHAI|                40000|          600
