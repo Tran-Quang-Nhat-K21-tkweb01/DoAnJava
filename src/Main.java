@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -66,7 +67,15 @@ public class Main {
                         if (chon2 == 0) break;
                         switch (chon2) {
                             case 1:{
+                                if (soLuongHoaDon <= 0) break;
+                                inHoaDonHienCo(0, soLuongHoaDon);
+                                Scanner sc2 = new Scanner(System.in);
+                                System.out.print("Nhập Số Bàn : ");
+                                String timKiem2 = sc2.next();
 
+                                int ketQuaTK2 = timKiemTheoSoBan(timKiem2);
+                                if (ketQuaTK2 < 0) break;
+                                goiThemMon(ketQuaTK2);
                                 break;
                             }
                             case 2:{
@@ -101,7 +110,10 @@ public class Main {
                     if (chon3 == 0) break;
                     switch (chon3){
                         case 1: {
-                            int ketQua = timKiemTheoSoBan();
+                            Scanner scanner = new Scanner(System.in);
+                            System.out.print("Nhập vào số bàn muốn tìm kiếm : ");
+                            String timKiem = scanner.next();
+                            int ketQua = timKiemTheoSoBan(timKiem);
                             if(ketQua < 0) {
                                 System.out.println("Không tìm thấy hóa đơn liên quan");
                                 break;
@@ -124,21 +136,53 @@ public class Main {
                     break;
                 }
                 case 4: {
+                    System.out.println("-------------------------------------");
+                    System.out.println("1. Chỉnh sửa số lượng mặt hàng");
+                    System.out.println("2. Xóa mặt hàng");
+                    System.out.println("0. Thoát");
+                    System.out.println("-------------------------------------");
+                    System.out.print("MỜI BẠN CHỌN : ");
+                    int chon4 = kiemTraDauVao(0, 2);
+                    if (chon4 == 0) break;
+                    switch (chon4){
+                        case 1: {
+                            if (soLuongHoaDon <= 0) break;
+                            inHoaDonHienCo(0, soLuongHoaDon);
+                            Scanner sc4 = new Scanner(System.in);
+                            System.out.print("Nhập Số Bàn : ");
+                            String timKiem4 = sc4.next();
+
+                            int ketQuaTK4 = timKiemTheoSoBan(timKiem4);
+                            if (ketQuaTK4 < 0) break;
+                            chinhSoLuong(ketQuaTK4);
+                            break;
+                        }
+                        case 2: {
+                            break;
+                        }
+                    }
+                    anPhimBatKy();
                     break;
                 }
                 case 5: {
-                    if(soLuongHoaDon < 0){
+                    if(soLuongHoaDon <= 0){
                         System.out.println("Chưa có bàn hoạt động");
                         break;
                     }
                     inHoaDonHienCo(0, soLuongHoaDon);
-                    int n = timKiemTheoSoBan();
+
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.print("Nhập Số Bàn : ");
+                    String timKiem5 = scanner.next();
+
+                    int n = timKiemTheoSoBan(timKiem5);
                     if(n < 0) {
                         System.out.println("Không tìm thấy bàn này");
                     }else {
                         thanhToanHoaDon(n);
                     }
 
+                    anPhimBatKy();
                     break;
                 }
                 case 6: {
@@ -200,11 +244,12 @@ public class Main {
                 case 10: {
                     System.out.println("-------------------------------------");
                     System.out.println("1. Nhập thêm món vào menu");
-                    System.out.println("2. Nhập thêm số lượng vào kho hàng");
+                    System.out.println("2. Xóa món khỏi menu ");
+                    System.out.println("3. Nhập thêm số lượng vào kho hàng");
                     System.out.println("0. Thoát");
                     System.out.println("-------------------------------------");
                     System.out.print("MỜI BẠN CHỌN : ");
-                    int chon10 = kiemTraDauVao(0, 2);
+                    int chon10 = kiemTraDauVao(0, 3);
                     if(chon10 == 0) break;
                     switch (chon10) {
                         case 1:{
@@ -212,6 +257,18 @@ public class Main {
                             int soSPThem= kiemTraDauVao(0, 1000);
                             soLuongSanPham = nhapThongTinSanPham(soSPThem);
                             inThongTinSanPham(soLuongSanPham);
+
+                            anPhimBatKy();
+                            break;
+                        }
+                        case 2:{
+
+                            anPhimBatKy();
+                            break;
+                        }
+                        case 3:{
+
+                            anPhimBatKy();
                             break;
                         }
                     }
@@ -268,6 +325,23 @@ public class Main {
         }
     }
 
+    // Hàm in hóa đơn tìm kiếm có mã số mặt hàng
+    public static void inHoaDonCoMaMon(int timKiem2){
+        System.out.println("____________________________________________________________________");
+        System.out.println("         Bàn số : " + hoaDons[timKiem2].soBan);
+        System.out.println("                                       giờ vào : " + hoaDons[timKiem2].gioVao);
+        System.out.println("                                       giờ ra  : ");
+        System.out.printf("%10s\t %-25s%10s%9s%14s \n", "MÃ SỐ MÓN", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
+        for (int j = 0; j < soLuongSanPham; j++) {
+            if(hoaDons[timKiem2].soLuong[j] > 0) {
+                long thanhTien = (hoaDons[timKiem2].soLuong[j] * sanPhams[j].giaBan);
+                System.out.printf("%10s\t %-25s%10d%9d%14d \n",
+                       "00"+j,  sanPhams[j].tenSanPham, hoaDons[timKiem2].soLuong[j], sanPhams[j].giaBan, thanhTien);
+            }
+        }
+        System.out.println("Tổng cộng : " + hoaDons[timKiem2].tongTien);
+        System.out.println("____________________________________________________________________");
+    }
 
 //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
@@ -313,6 +387,16 @@ public class Main {
 
 //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+    // Hàm gọi thêm món
+    public static void goiThemMon(int timKiem2){
+        inHoaDonCoMaMon(timKiem2);
+        System.out.println("Nhập mã số mặt hàng : ");
+        int nhapMaMon = kiemTraDauVao(0, soLuongSanPham);
+        System.out.println("Nhập số lượng thêm : ");
+        int nhapThem = kiemTraDauVao(0, sanPhams[nhapMaMon].tonKho - hoaDons[timKiem2].soLuong[nhapMaMon]);
+        hoaDons[timKiem2].soLuong[nhapMaMon] += nhapThem;
+        sanPhams[nhapMaMon].tonKho -= nhapThem;
+    }
     public static double nhapBanMoi() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập số bàn : ");
@@ -360,10 +444,8 @@ public class Main {
 //3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 
     // Hàm tìm kiếm theo số bàn
-    public static int timKiemTheoSoBan() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Nhập vào số bàn muốn tìm kiếm : ");
-        String timKiem = scanner.next();
+    public static int timKiemTheoSoBan(String timKiem) {
+
         for (int i = 0; i < soLuongHoaDon; i++) {
             if (timKiem.equals(hoaDons[i].soBan)) {
                 return i;
@@ -394,6 +476,18 @@ public class Main {
     }
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+    // Hàm chỉnh sửa số lượng món
+    public static void chinhSoLuong(int timKiem4){
+        inHoaDonCoMaMon(timKiem4);
+        System.out.println("Nhập mã số mặt hàng : ");
+        int nhapMaMon = kiemTraDauVao(0, soLuongSanPham);
+        System.out.println("Sửa số lượng thành (Nhấn phím 0 để xóa món) : ");
+        int chinhSua = kiemTraDauVao(0, sanPhams[nhapMaMon].tonKho);
+        // Hàm xóa món trong hóa đơn nếu bạn nhập chinhSua = 0;
+        hoaDons[timKiem4].soLuong[nhapMaMon] = chinhSua;
+        sanPhams[nhapMaMon].tonKho += (chinhSua - hoaDons[timKiem4].soLuong[nhapMaMon]);
+    }
+
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 
@@ -404,6 +498,7 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy  HH:mm");
         // Chuyển đổi ngày và giờ thành chuỗi theo định dạng đã chỉ định
         String gioRa = gioHienTai.format(formatter);
+
         System.out.println("+____________________________________________________________+");
         System.out.println("|                        PXU PUB BEER GARDEN                 |");
         System.out.println("|              176 Trần Phú, P Vĩnh Ninh, Thành phố Huế      |");
@@ -411,20 +506,25 @@ public class Main {
         System.out.println("|                        ___________________                 |");
         System.out.println("|                          HÓA ĐƠN BÁN HÀNG                  |");
         System.out.println("|         Bàn số : " + hoaDons[x].soBan + "|");
-        System.out.println("|                                 giờ vào : " + hoaDons[x].gioVao + "|");
-        System.out.println("|                                 giờ ra  : " + gioRa + "|");
+        System.out.println("|                               giờ vào : " + hoaDons[x].gioVao + "  |");
+        System.out.println("|                               giờ ra  : " + gioRa + "  |");
         System.out.println("|____________________________________________________________|");
-        System.out.printf("|%-25s%10s%9s%14s |\n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
-        System.out.println("|____________________________________________________________|");
+        System.out.printf("|%-25s%10s%9s%14s  |\n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
+        System.out.println("|------------------------------------------------------------|");
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+
         for (int j = 0; j < soLuongSanPham; j++) {
             if(hoaDons[x].soLuong[j] > 0) {
                 long thanhTien = (hoaDons[x].soLuong[j] * sanPhams[j].giaBan);
-                System.out.printf("%-25s%10d%9d%14d \n",
-                        sanPhams[j].tenSanPham, hoaDons[x].soLuong[j], sanPhams[j].giaBan, thanhTien);
+                String thanhTienDinhDang = decimalFormat.format(thanhTien);
+                System.out.printf("|%-25s%10d%9d%14s |\n",
+                        sanPhams[j].tenSanPham, hoaDons[x].soLuong[j], sanPhams[j].giaBan, thanhTienDinhDang);
             }
         }
         System.out.println("+____________________________________________________________+");
-        System.out.println("                                   Tổng cộng : " + hoaDons[x].tongTien);
+        String tongTienDinhDang = decimalFormat.format(hoaDons[x].tongTien);
+        System.out.println("                                   Tổng cộng : " + tongTienDinhDang);
         hoaDonDaThanhToan[soLuongHoaDonDaThanhToan] = hoaDons[x];
         hoaDonDaThanhToan[soLuongHoaDonDaThanhToan].gioRa = gioRa;
         for (int i = x; i < soLuongHoaDon; i++) {
