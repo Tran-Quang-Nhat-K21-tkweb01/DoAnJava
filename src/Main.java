@@ -56,6 +56,10 @@ public class Main {
                             break;
                         }
                         case 3:{
+                            if (soLuongHoaDon <= 0) {
+                                System.out.println("Chưa có bàn nào hoạt động");
+                                break;
+                            }
                             sapXepTheoTongTien();
 
                             anPhimBatKy();
@@ -288,7 +292,7 @@ public class Main {
                             int nhap10 = kiemTraDauVao(0, soLuongSanPham);
                             System.out.println("Nhập số lượng thêm vào : ");
                             int nhapThem10 = kiemTraDauVao(0, 500);
-                            sanPhams[nhap10-1].tonKho = nhapThem10;
+                            sanPhams[nhap10-1].tonKho += nhapThem10;
                             System.out.println("Nhập kho thành công !");
 
                             anPhimBatKy();
@@ -422,7 +426,7 @@ public class Main {
         }
         for (int i = 0; i < soLuongHoaDon; i++) {
             System.out.println("_______________________________________________");
-            System.out.println("BÀN SỐ : " + hoaDonsClone[i].soBan + "( Tổng Tiền - " + hoaDonsClone[i].tongTien + " )" );
+            System.out.println("BÀN SỐ : " + hoaDonsClone[i].soBan + "    ( Tổng Tiền - " + hoaDonsClone[i].tongTien + " )" );
             System.out.println("_______________________________________________");
         }
     }
@@ -573,7 +577,7 @@ public class Main {
         }
         System.out.println("+____________________________________________________________+");
         String tongTienDinhDang = decimalFormat.format(hoaDons[x].tongTien);
-        System.out.println("                                   Tổng cộng : " + tongTienDinhDang);
+        System.out.println("                                   Tổng cộng : " + tongTienDinhDang + "vnd");
 
         //Lưu hóa đơn đã thanh toán vào một mảng khác
         hoaDonDaThanhToan[soLuongHoaDonDaThanhToan] = hoaDons[x];
