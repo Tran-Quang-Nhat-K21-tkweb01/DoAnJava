@@ -20,7 +20,7 @@ public class Main {
 
     static HoaDon hoaDonDaThanhToan[] = new HoaDon[1000];
     static int soLuongHoaDonDaThanhToan = 0;
-    static double taiKhoanThanhToan = 50000000;
+    static long taiKhoanThanhToan = 50000000;
 
     public static void main(String[] args) {
 
@@ -95,6 +95,7 @@ public class Main {
                                     break;
                                 }
                                 goiThemMon(ketQuaTK2);
+                                System.out.println("Thêm món cho bàn " + hoaDons[ketQuaTK2].soBan + " thành công !");
                                 break;
                             }
                             case 2: {
@@ -287,6 +288,10 @@ public class Main {
                             break;
                         }
                         case 2: {
+                            if (soLuongSanPham <= 0 ) {
+                                System.out.println("Vui lòng nhập dư liệu menu trước khi thực hiện");
+                                break;
+                            }
                             inThongTinSanPham(soLuongSanPham);
                             System.out.println("Nhập vào số thứ tự sản phẩm bạn muốn nhập kho");
                             int nhap10 = kiemTraDauVao(0, soLuongSanPham);
@@ -316,7 +321,7 @@ public class Main {
         System.out.println("||  6. NHẬP TỪ FILE               ||");
         System.out.println("||  7. XUẤT RA FILE               ||");
         System.out.println("||  8. THỐNG KÊ                   ||");
-        System.out.println("||  9. BÁO CÁO                    ||");
+        System.out.println("||  9. BÁO CÁO LỊCH SỬ GIAO DỊCH  ||");
         System.out.println("||  10. QUẢN LÝ KHO HÀNG          ||");
         System.out.println("||  0. THOÁT                      ||");
         System.out.println("------------------------------------");
@@ -577,7 +582,7 @@ public class Main {
         }
         System.out.println("+____________________________________________________________+");
         String tongTienDinhDang = decimalFormat.format(hoaDons[x].tongTien);
-        System.out.println("                                   Tổng cộng : " + tongTienDinhDang + "vnd");
+        System.out.println("                                   Tổng cộng : " + tongTienDinhDang + "  vnd");
 
         //Lưu hóa đơn đã thanh toán vào một mảng khác
         hoaDonDaThanhToan[soLuongHoaDonDaThanhToan] = hoaDons[x];
@@ -700,14 +705,17 @@ public class Main {
         for (int i = 0; i < soLuongHoaDonDaThanhToan; i++) {
             tongTienDaThanhToan += hoaDonDaThanhToan[i].tongTien;
         }
+        DecimalFormat decimal = new DecimalFormat("#,###");
+        String tongTienBanDuocDinhDang = decimal.format(tongTienBanDuoc + tongTienDaThanhToan);
+        String taiKhoanThanhToanDinhDang = decimal.format(taiKhoanThanhToan);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("SỐ BÀN ĐANG HOẠT ĐỘNG             : " + soLuongHoaDon);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("SỐ BÀN ĐÃ THANH TOÁN              : " + soLuongHoaDonDaThanhToan);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("TỔNG SỐ TIỀN ĐÃ BÁN ĐƯỢC HÔM NAY  : " + (tongTienBanDuoc + tongTienDaThanhToan));
+        System.out.println("TỔNG SỐ TIỀN ĐÃ BÁN ĐƯỢC HÔM NAY  : " + (tongTienBanDuocDinhDang) + "  đ");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("SỐ DƯ HIỆN TẠI           :  " + taiKhoanThanhToan);
+        System.out.println("SỐ DƯ HIỆN TẠI           :  " + taiKhoanThanhToanDinhDang + "  đ");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 //9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -719,7 +727,7 @@ public class Main {
             System.out.println("____________________________________________________________________");
             System.out.println("         Bàn số : " + hoaDonDaThanhToan[i].soBan);
             System.out.println("                                       giờ vào : " + hoaDonDaThanhToan[i].gioVao);
-            System.out.println("                                       giờ ra  : ");
+            System.out.println("                                       giờ ra  : " + hoaDonDaThanhToan[i].gioRa);
             System.out.printf("%-25s%10s%9s%14s \n", "Tên Hàng", "Số Lượng", "Đơn giá", "Thành tiền");
             for (int j = 0; j < soLuongSanPham; j++) {
                 if (hoaDonDaThanhToan[i].soLuong[j] > 0) {
